@@ -84,8 +84,7 @@ func StartFyneGame() {
 	}
 
 	app := app.New()
-	icon, _ := fyne.LoadResourceFromPath("assets/AppIcon.svg")
-	app.SetIcon(icon)
+	app.SetIcon(resourceAppIconPng)
 	window := app.NewWindow("Gordle")
 	window.SetFixedSize(true)
 	window.SetCloseIntercept(func() {
@@ -179,8 +178,7 @@ func header(app *fyne.App, state *AppState) *fyne.Container {
 
 	iconRect := canvas.NewRectangle(c.Transparent)
 	iconRect.SetMinSize(fyne.NewSize(48, 48))
-	appIcon, _ := fyne.LoadResourceFromPath("assets/AppIcon.svg")
-	icon := widget.NewIcon(appIcon)
+	icon := widget.NewIcon(resourceAppIconSvg)
 	iconBox := container.New(layout.NewMaxLayout(), iconRect, icon)
 
 	title := canvas.NewText("Gordle", c.Black)
@@ -212,14 +210,11 @@ func openAboutDialog(app *fyne.App, state *AppState) {
 		window := (*app).NewWindow("Gordle")
 		window.SetFixedSize(true)
 
-		aboutPart1Res, _ := fyne.LoadResourceFromPath("assets/about_part1.md")
-		aboutPart1 := widget.NewRichTextFromMarkdown(string(aboutPart1Res.Content()))
+		aboutPart1 := widget.NewRichTextFromMarkdown(string(resourceAboutpart1Md.Content()))
 		exampleRect := canvas.NewRectangle(c.Transparent)
 		exampleRect.SetMinSize(fyne.NewSize(331, 69))
-		exampleRes, _ := fyne.LoadResourceFromPath("assets/example.png")
-		example := container.New(layout.NewMaxLayout(), exampleRect, widget.NewIcon(exampleRes))
-		aboutPart2Res, _ := fyne.LoadResourceFromPath("assets/about_part2.md")
-		aboutPart2 := widget.NewRichTextFromMarkdown(string(aboutPart2Res.Content()))
+		example := container.New(layout.NewMaxLayout(), exampleRect, widget.NewIcon(resourceExamplePng))
+		aboutPart2 := widget.NewRichTextFromMarkdown(string(resourceAboutpart2Md.Content()))
 
 		about := container.NewVBox(aboutPart1, container.New(layout.NewHBoxLayout(), example), aboutPart2)
 		window.SetContent(about)

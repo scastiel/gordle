@@ -1,10 +1,11 @@
 package main
 
 import (
-	gordle "gordle/src"
 	"math/rand"
 	"os"
 	"time"
+
+	gordle "github.com/scastiel/gordle/src"
 )
 
 func init() {
