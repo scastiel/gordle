@@ -9,7 +9,6 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"golang.org/x/text/cases"
@@ -122,35 +121,22 @@ func StartFyneGame() {
 		fyne.KeyY: "Y",
 		fyne.KeyZ: "Z",
 	}
-	for key, letter := range mappings {
-		theLetter := letter
-		window.Canvas().AddShortcut(
-			&desktop.CustomShortcut{KeyName: key},
-			func(shortcut fyne.Shortcut) {
-				state.typeLetter(theLetter)
-				render(&app, &state, window)
-			},
-		)
-	}
-	window.Canvas().AddShortcut(
-		&desktop.CustomShortcut{KeyName: fyne.KeyBackspace},
-		func(shortcut fyne.Shortcut) {
+
+	window.Canvas().SetOnTypedKey(func(key *fyne.KeyEvent) {
+		if letter, exists := mappings[key.Name]; exists {
+			state.typeLetter(letter)
+			render(&app, &state, window)
+		} else if key.Name == fyne.KeyBackspace {
 			state.backspace()
 			render(&app, &state, window)
-		},
-	)
-	window.Canvas().AddShortcut(
-		&desktop.CustomShortcut{KeyName: fyne.KeySpace},
-		func(shortcut fyne.Shortcut) {
-			err := state.enter()
-			if err != nil {
+		} else if key.Name == fyne.KeyReturn {
+			if err := state.enter(); err != nil {
 				displayError(err, &app, &state, window)
 			} else {
 				render(&app, &state, window)
 			}
-		},
-	)
-
+		}
+	})
 	window.ShowAndRun()
 }
 
