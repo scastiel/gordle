@@ -23,6 +23,7 @@ type AppState struct {
 	currentWord  string
 	errorMessage string
 	letterColors map[string]Color
+	aboutWindow  *fyne.Window
 }
 
 func (state *AppState) typeLetter(letter string) {
@@ -80,6 +81,7 @@ func StartFyneGame() {
 		currentWord:  "",
 		errorMessage: "",
 		letterColors: make(map[string]Color),
+		aboutWindow:  nil,
 	}
 
 	app := app.New()
@@ -87,7 +89,10 @@ func StartFyneGame() {
 	app.SetIcon(icon)
 	window := app.NewWindow("Gordle")
 	window.SetFixedSize(true)
-	render(&state, window)
+	window.SetCloseIntercept(func() {
+		app.Quit()
+	})
+	render(&app, &state, window)
 
 	mappings := map[fyne.KeyName]string{
 		fyne.KeyA: "A",
@@ -123,7 +128,7 @@ func StartFyneGame() {
 			&desktop.CustomShortcut{KeyName: key},
 			func(shortcut fyne.Shortcut) {
 				state.typeLetter(theLetter)
-				render(&state, window)
+				render(&app, &state, window)
 			},
 		)
 	}
@@ -131,7 +136,7 @@ func StartFyneGame() {
 		&desktop.CustomShortcut{KeyName: fyne.KeyBackspace},
 		func(shortcut fyne.Shortcut) {
 			state.backspace()
-			render(&state, window)
+			render(&app, &state, window)
 		},
 	)
 	window.Canvas().AddShortcut(
@@ -139,9 +144,9 @@ func StartFyneGame() {
 		func(shortcut fyne.Shortcut) {
 			err := state.enter()
 			if err != nil {
-				displayError(err, &state, window)
+				displayError(err, &app, &state, window)
 			} else {
-				render(&state, window)
+				render(&app, &state, window)
 			}
 		},
 	)
@@ -151,26 +156,26 @@ func StartFyneGame() {
 
 var errorTicker *time.Ticker
 
-func displayError(err error, state *AppState, window fyne.Window) {
+func displayError(err error, app *fyne.App, state *AppState, window fyne.Window) {
 	if errorTicker != nil {
 		errorTicker.Stop()
 	}
 	state.errorMessage = cases.Title(language.English).String(err.Error())
 	errorTicker = time.NewTicker(1 * time.Second)
-	render(state, window)
+	render(app, state, window)
 
 	go func() {
 		<-errorTicker.C
 		errorTicker.Stop()
 		state.errorMessage = ""
-		render(state, window)
+		render(app, state, window)
 	}()
 }
 
-func render(state *AppState, window fyne.Window) {
+func render(app *fyne.App, state *AppState, window fyne.Window) {
 	container := container.New(layout.NewVBoxLayout())
 
-	container.Add(header())
+	container.Add(header(app, state))
 	container.Add(statusMessage(state))
 	container.Add(wordRows(state))
 
@@ -178,25 +183,33 @@ func render(state *AppState, window fyne.Window) {
 	space.SetMinSize(fyne.NewSize(0, 40))
 	container.Add(space)
 
-	container.Add(keyboard(state, window))
+	container.Add(keyboard(app, state, window))
 
 	window.SetContent(container)
 }
 
-func header() *fyne.Container {
+func header(app *fyne.App, state *AppState) *fyne.Container {
 	header := container.New(layout.NewVBoxLayout())
 
-	titleRow := container.New(layout.NewMaxLayout())
 	iconRect := canvas.NewRectangle(c.Transparent)
 	iconRect.SetMinSize(fyne.NewSize(48, 48))
 	appIcon, _ := fyne.LoadResourceFromPath("assets/AppIcon.svg")
 	icon := widget.NewIcon(appIcon)
-	titleRow.Add(container.New(layout.NewHBoxLayout(), container.New(layout.NewMaxLayout(), iconRect, icon)))
+	iconBox := container.New(layout.NewMaxLayout(), iconRect, icon)
 
 	title := canvas.NewText("Gordle", c.Black)
 	title.Alignment = fyne.TextAlignCenter
 	title.TextSize = 24
 	title.TextStyle.Bold = true
+
+	helpButtonRect := canvas.NewRectangle(c.Transparent)
+	helpButtonRect.SetMinSize(fyne.NewSize(48, 48))
+	helpButton := widget.NewButton("?", func() { openAboutDialog(app, state) })
+	helpButtonBox := container.New(layout.NewMaxLayout(), helpButtonRect, helpButton)
+
+	titleRow := container.New(layout.NewBorderLayout(nil, nil, iconBox, helpButtonBox))
+	titleRow.Add(iconBox)
+	titleRow.Add(helpButtonBox)
 	titleRow.Add(title)
 
 	header.Add(titleRow)
@@ -206,6 +219,33 @@ func header() *fyne.Container {
 	header.Add(border)
 
 	return header
+}
+
+func openAboutDialog(app *fyne.App, state *AppState) {
+	if state.aboutWindow == nil {
+		window := (*app).NewWindow("Gordle")
+		window.SetFixedSize(true)
+
+		aboutPart1Res, _ := fyne.LoadResourceFromPath("assets/about_part1.md")
+		aboutPart1 := widget.NewRichTextFromMarkdown(string(aboutPart1Res.Content()))
+		exampleRect := canvas.NewRectangle(c.Transparent)
+		exampleRect.SetMinSize(fyne.NewSize(331, 69))
+		exampleRes, _ := fyne.LoadResourceFromPath("assets/example.png")
+		example := container.New(layout.NewMaxLayout(), exampleRect, widget.NewIcon(exampleRes))
+		aboutPart2Res, _ := fyne.LoadResourceFromPath("assets/about_part2.md")
+		aboutPart2 := widget.NewRichTextFromMarkdown(string(aboutPart2Res.Content()))
+
+		about := container.NewVBox(aboutPart1, container.New(layout.NewHBoxLayout(), example), aboutPart2)
+		window.SetContent(about)
+		window.Show()
+		window.SetCloseIntercept(func() {
+			window.Close()
+			state.aboutWindow = nil
+		})
+		state.aboutWindow = &window
+	} else {
+		(*state.aboutWindow).RequestFocus()
+	}
 }
 
 func statusMessage(state *AppState) *fyne.Container {
@@ -330,7 +370,7 @@ func emptyLetterBox() *canvas.Rectangle {
 	return box
 }
 
-func keyboard(state *AppState, window fyne.Window) *fyne.Container {
+func keyboard(app *fyne.App, state *AppState, window fyne.Window) *fyne.Container {
 	letterRows := [][]string{
 		{"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"},
 		{"A", "S", "D", "F", "G", "H", "J", "K", "L"},
@@ -344,9 +384,9 @@ func keyboard(state *AppState, window fyne.Window) *fyne.Container {
 			enterButton := widget.NewButton("ENTER", func() {
 				err := state.enter()
 				if err != nil {
-					displayError(err, theState, window)
+					displayError(err, app, theState, window)
 				} else {
-					render(theState, window)
+					render(app, theState, window)
 				}
 			})
 			decoratedEnterButton := decorateButton(enterButton, nil, nil, fyne.NewSize(65.4, 58))
@@ -357,7 +397,7 @@ func keyboard(state *AppState, window fyne.Window) *fyne.Container {
 			theState := state
 			button := widget.NewButton(theLetter, func() {
 				theState.typeLetter(theLetter)
-				render(theState, window)
+				render(app, theState, window)
 			})
 			decoratedButton := decorateLetterButton(button, state)
 			row.Add(decoratedButton)
@@ -366,7 +406,7 @@ func keyboard(state *AppState, window fyne.Window) *fyne.Container {
 			theState := state
 			backButton := widget.NewButton("BACK", func() {
 				state.backspace()
-				render(theState, window)
+				render(app, theState, window)
 			})
 			decoratedBackButton := decorateButton(backButton, nil, nil, fyne.NewSize(65.4, 58))
 			row.Add(decoratedBackButton)
