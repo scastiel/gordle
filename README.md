@@ -4,7 +4,7 @@
 
 ## Features
 
-- [x] ~2.3k words
+- [x] Works on macOS, should work on Linux and Windows as well (not tested)
 - [x] Letter color hints on the keyboard
 - [ ] Start a new game (without restarting the app)
 - [ ] Share your performance
@@ -46,4 +46,4 @@ _(Tested only on my Mac M1 for now. Ping me if you tried on another platform and
 
 ## License
 
-[MIT, see LICENSE](LICENCE)
+[MIT, see LICENSE](LICENSE)
