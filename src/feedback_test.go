@@ -42,7 +42,7 @@ func TestFromGuessReturnsAllGreyForTotallyDifferentWords(t *testing.T) {
 
 func TestFromGuessReturnsMixedColorsForSimilarWords(t *testing.T) {
 	solution, _ := NewWord("HELLO")
-	guess, _ := NewWord("THOLE")
+	guess, _ := NewWord("FILTH")
 	feedback := FromGuess(guess, solution)
-	assert.Equal(t, Feedback{Colors: []Color{Grey, Yellow, Yellow, Green, Yellow}}, feedback)
+	assert.Equal(t, Feedback{Colors: []Color{Grey, Grey, Green, Grey, Yellow}}, feedback)
 }
