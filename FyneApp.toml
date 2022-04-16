@@ -1,0 +1,8 @@
+Website = "https://scastiel.dev"
+
+[Details]
+  Icon = "assets/AppIcon.png"
+  Name = "Gordle"
+  ID = "dev.scastiel.gordle"
+  Version = "1.0.0"
+  Build = 5
