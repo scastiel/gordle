@@ -6,7 +6,7 @@
 
 - [x] Works on macOS, should work on Linux and Windows as well (not tested)
 - [x] Letter color hints on the keyboard
-- [ ] Start a new game (without restarting the app)
+- [x] Start a new game (without restarting the app)
 - [ ] Share your performance
 - [ ] Dark theme
 

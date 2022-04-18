@@ -172,9 +172,9 @@ func openAboutDialog(app *fyne.App, state *AppState) {
 func statusMessage(state *AppState) *fyne.Container {
 	message := ""
 	if state.game.State == Won {
-		message = "You won!"
+		message = "You won! Press ENTER to start again."
 	} else if state.game.State == Lost {
-		message = "The solution was " + state.game.Solution.Letters + "."
+		message = "The solution was " + state.game.Solution.Letters + ".  Press ENTER to try again."
 	} else if state.errorMessage != "" {
 		message = state.errorMessage
 	}

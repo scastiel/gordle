@@ -75,6 +75,8 @@ func (state AppState) enter() AppState {
 		}
 
 		state.currentWord = ""
+	} else {
+		state = *NewAppState()
 	}
 	return state
 }
