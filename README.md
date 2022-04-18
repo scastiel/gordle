@@ -1,5 +1,7 @@
 # Gordle – Yet another Wordle clone
 
+[![Go](https://github.com/scastiel/gordle/workflows/Go/badge.svg)](https://github.com/scastiel/gordle/actions/workflows/go.yml)
+
 ![Gordle Demo](assets/GordleDemo.gif)
 
 ## Features
