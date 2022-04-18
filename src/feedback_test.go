@@ -46,3 +46,10 @@ func TestFromGuessReturnsMixedColorsForSimilarWords(t *testing.T) {
 	feedback := FromGuess(guess, solution)
 	assert.Equal(t, Feedback{Colors: []Color{Grey, Grey, Green, Grey, Yellow}}, feedback)
 }
+
+func TestIsWin(t *testing.T) {
+	notWin := Feedback{Colors: []Color{Grey, Grey, Green, Grey, Yellow}}
+	assert.False(t, notWin.IsWin())
+	win := Feedback{Colors: []Color{Green, Green, Green, Green, Green}}
+	assert.True(t, win.IsWin())
+}

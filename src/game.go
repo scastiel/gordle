@@ -24,12 +24,12 @@ func NewGame() Game {
 	return Game{State: "started", Tries: 0, Solution: RandomWord()}
 }
 
-func Guess(game Game, guess Word) (Game, Feedback, error) {
+func (game *Game) Guess(guess Word) (Game, Feedback, error) {
 	if game.State != Started {
-		return game, Feedback{}, errors.New("Game already finished")
+		return *game, Feedback{}, errors.New("Game already finished")
 	}
 	feedback := FromGuess(guess, game.Solution)
-	if IsWin(feedback) {
+	if feedback.IsWin() {
 		return Game{State: Won, Tries: game.Tries + 1, Solution: game.Solution}, feedback, nil
 	}
 	if game.Tries == maxTries-1 {

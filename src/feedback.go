@@ -16,7 +16,7 @@ type Feedback struct {
 	Colors []Color
 }
 
-func IsWin(feedback Feedback) bool {
+func (feedback *Feedback) IsWin() bool {
 	return feedback.Colors[0] == Green &&
 		feedback.Colors[1] == Green &&
 		feedback.Colors[2] == Green &&
