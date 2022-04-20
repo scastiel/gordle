@@ -1,0 +1,139 @@
+# fyne.io/fyne/v2 v2.1.4
+## explicit; go 1.14
+fyne.io/fyne/v2
+fyne.io/fyne/v2/app
+fyne.io/fyne/v2/canvas
+fyne.io/fyne/v2/container
+fyne.io/fyne/v2/data/binding
+fyne.io/fyne/v2/driver/desktop
+fyne.io/fyne/v2/driver/mobile
+fyne.io/fyne/v2/internal
+fyne.io/fyne/v2/internal/animation
+fyne.io/fyne/v2/internal/app
+fyne.io/fyne/v2/internal/async
+fyne.io/fyne/v2/internal/cache
+fyne.io/fyne/v2/internal/color
+fyne.io/fyne/v2/internal/driver
+fyne.io/fyne/v2/internal/driver/common
+fyne.io/fyne/v2/internal/driver/glfw
+fyne.io/fyne/v2/internal/driver/mobile
+fyne.io/fyne/v2/internal/driver/mobile/app
+fyne.io/fyne/v2/internal/driver/mobile/app/callfn
+fyne.io/fyne/v2/internal/driver/mobile/event/key
+fyne.io/fyne/v2/internal/driver/mobile/event/lifecycle
+fyne.io/fyne/v2/internal/driver/mobile/event/paint
+fyne.io/fyne/v2/internal/driver/mobile/event/size
+fyne.io/fyne/v2/internal/driver/mobile/event/touch
+fyne.io/fyne/v2/internal/driver/mobile/gl
+fyne.io/fyne/v2/internal/driver/mobile/mobileinit
+fyne.io/fyne/v2/internal/painter
+fyne.io/fyne/v2/internal/painter/gl
+fyne.io/fyne/v2/internal/painter/software
+fyne.io/fyne/v2/internal/repository
+fyne.io/fyne/v2/internal/test
+fyne.io/fyne/v2/internal/widget
+fyne.io/fyne/v2/layout
+fyne.io/fyne/v2/storage
+fyne.io/fyne/v2/storage/repository
+fyne.io/fyne/v2/test
+fyne.io/fyne/v2/theme
+fyne.io/fyne/v2/widget
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
+# github.com/fredbi/uri v0.0.0-20181227131451-3dcfdacbaaf3
+## explicit
+github.com/fredbi/uri
+# github.com/fsnotify/fsnotify v1.4.9
+## explicit; go 1.13
+github.com/fsnotify/fsnotify
+# github.com/go-gl/gl v0.0.0-20210813123233-e4099ee2221f
+## explicit; go 1.9
+github.com/go-gl/gl/v3.1/gles2
+github.com/go-gl/gl/v3.1/gles2/KHR
+github.com/go-gl/gl/v3.2-core/gl
+github.com/go-gl/gl/v3.2-core/gl/KHR
+# github.com/go-gl/glfw/v3.3/glfw v0.0.0-20211024062804-40e447a793be
+## explicit; go 1.10
+github.com/go-gl/glfw/v3.3/glfw
+github.com/go-gl/glfw/v3.3/glfw/glfw/deps
+github.com/go-gl/glfw/v3.3/glfw/glfw/deps/glad
+github.com/go-gl/glfw/v3.3/glfw/glfw/deps/mingw
+github.com/go-gl/glfw/v3.3/glfw/glfw/deps/vs2008
+github.com/go-gl/glfw/v3.3/glfw/glfw/include/GLFW
+github.com/go-gl/glfw/v3.3/glfw/glfw/src
+# github.com/godbus/dbus/v5 v5.0.4
+## explicit; go 1.12
+github.com/godbus/dbus/v5
+# github.com/goki/freetype v0.0.0-20181231101311-fa8a33aabaff
+## explicit
+github.com/goki/freetype
+github.com/goki/freetype/raster
+github.com/goki/freetype/truetype
+# github.com/pmezard/go-difflib v1.0.0
+## explicit
+github.com/pmezard/go-difflib/difflib
+# github.com/srwiley/oksvg v0.0.0-20200311192757-870daf9aa564
+## explicit
+github.com/srwiley/oksvg
+# github.com/srwiley/rasterx v0.0.0-20200120212402-85cb7272f5e9
+## explicit
+github.com/srwiley/rasterx
+# github.com/stretchr/testify v1.7.1
+## explicit; go 1.13
+github.com/stretchr/testify/assert
+github.com/stretchr/testify/require
+# github.com/yuin/goldmark v1.3.8
+## explicit; go 1.15
+github.com/yuin/goldmark
+github.com/yuin/goldmark/ast
+github.com/yuin/goldmark/parser
+github.com/yuin/goldmark/renderer
+github.com/yuin/goldmark/renderer/html
+github.com/yuin/goldmark/text
+github.com/yuin/goldmark/util
+# golang.org/x/image v0.0.0-20200430140353-33d19683fad8
+## explicit; go 1.12
+golang.org/x/image/colornames
+golang.org/x/image/draw
+golang.org/x/image/font
+golang.org/x/image/math/f64
+golang.org/x/image/math/fixed
+golang.org/x/image/vector
+# golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
+## explicit; go 1.11
+golang.org/x/net/html
+golang.org/x/net/html/atom
+golang.org/x/net/html/charset
+# golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c
+## explicit; go 1.17
+golang.org/x/sys/execabs
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+golang.org/x/sys/windows/registry
+# golang.org/x/text v0.3.7
+## explicit; go 1.17
+golang.org/x/text/cases
+golang.org/x/text/encoding
+golang.org/x/text/encoding/charmap
+golang.org/x/text/encoding/htmlindex
+golang.org/x/text/encoding/internal
+golang.org/x/text/encoding/internal/identifier
+golang.org/x/text/encoding/japanese
+golang.org/x/text/encoding/korean
+golang.org/x/text/encoding/simplifiedchinese
+golang.org/x/text/encoding/traditionalchinese
+golang.org/x/text/encoding/unicode
+golang.org/x/text/internal
+golang.org/x/text/internal/language
+golang.org/x/text/internal/language/compact
+golang.org/x/text/internal/tag
+golang.org/x/text/internal/utf8internal
+golang.org/x/text/language
+golang.org/x/text/runes
+golang.org/x/text/transform
+golang.org/x/text/unicode/norm
+# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+## explicit
+gopkg.in/yaml.v3
