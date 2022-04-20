@@ -4,24 +4,28 @@ import (
 	"errors"
 	"math/rand"
 	"regexp"
+	"sort"
 )
 
 type Word struct {
 	Letters string
 }
 
-func isValidWord(letters string) bool {
-	for _, word := range validWords {
-		if word == letters {
-			return true
-		}
+func init() {
+	if !sort.StringsAreSorted(validWords) {
+		sort.Strings(validWords)
 	}
-	return false
 }
 
+func isValidWord(letters string) bool {
+	i := sort.SearchStrings(validWords, letters)
+	return i < len(validWords) && validWords[i] == letters
+}
+
+var validWordRegex = regexp.MustCompile("[A-Z]{5}")
+
 func NewWord(letters string) (Word, error) {
-	regex := regexp.MustCompile("[A-Z]{5}")
-	if !regex.MatchString(letters) {
+	if !validWordRegex.MatchString(letters) {
 		return Word{}, errors.New("invalid word")
 	}
 	if !isValidWord(letters) {
